@@ -1,7 +1,8 @@
 //- mixin pug 함수의 일종
 mixin videoBlock(video = {})
     .videoBlock
-        //- controls : video player의 컨트롤을 보여줌
-        video.videoBlock__thumbnail(src=video.videoFile, controls=true)
-        h4.videoBlock__title=video.title
-        h6.videoBlock__views=video.views 
+        a(href=routes.videoDetail(video.id))
+            //- controls : video player의 컨트롤을 보여줌
+            video.videoBlock__thumbnail(src=video.videoFile, controls=true)
+            h4.videoBlock__title=video.title
+            h6.videoBlock__views=video.views 
