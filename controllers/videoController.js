@@ -1,11 +1,15 @@
-export const home = (req, res) => res.render("home", { pageTitle: "Home" });
+export const home = (req, res) => {
+  //- home template에 videos 전달
+  res.render("home", { pageTitle: "Home", videos });
+};
 
 export const search = (req, res) => {
   //- const searchingBy = req.query.term; // Before ES6
   const {
     query: { term: searchingBy }
   } = req;
-  res.render("search", { pageTitle: "Search", searchingBy }); //- searchingBy: searchingBy
+  //- searchingBy: searchingBy
+  res.render("search", { pageTitle: "Search", searchingBy, videos });
 };
 
 export const upload = (req, res) =>
