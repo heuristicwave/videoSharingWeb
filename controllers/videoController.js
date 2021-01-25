@@ -1,15 +1,25 @@
 import routes from "../routes";
-export const home = (req, res) => {
-  //- home template에 videos 전달
-  res.render("home", { pageTitle: "Home", videos });
+import Video from "../models/Video";
+
+// await 비동기 처리 후, 렌더링
+export const home = async (req, res) => {
+  try {
+    const videos = await Video.find({});
+    // home 템플릿에 videos 전달
+    res.render("home", { pageTitle: "Home", videos });
+  } catch (error) {
+    console.log(error);
+    // 에러일땐, video를 가져오지 못하니 빈 배열을 넘김
+    res.render("home", { pageTitle: "Home", videos: [] });
+  }
 };
 
 export const search = (req, res) => {
-  //- const searchingBy = req.query.term; // Before ES6
+  // const searchingBy = req.query.term; // Before ES6
   const {
     query: { term: searchingBy }
   } = req;
-  //- searchingBy: searchingBy
+  // searchingBy: searchingBy
   res.render("search", { pageTitle: "Search", searchingBy, videos });
 };
 
