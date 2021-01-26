@@ -26,16 +26,32 @@ export const search = (req, res) => {
 export const getUpload = (req, res) =>
   res.render("upload", { pageTitle: "Upload" });
 
-export const postUpload = (req, res) => {
-    const {
-      body: { file, title, description }
-    } = req;
-    // To Do: Upload and save video
-    res.redirect(routes.videoDetail(324393));
-  };
+export const postUpload = async (req, res) => {
+  const {
+    body: { title, description },
+    file: { path }
+  } = req;
+  
+  const newVideo = await Video.create({ 
+    fileUrl: path,
+    title,
+    description
+  });
+  res.redirect(routes.videoDetail(newVideo.id));
+};
 
-export const videoDetail = (req, res) =>
-  res.render("videoDetail", { pageTitle: "Video Detail" });
+export const videoDetail = async (req, res) => {
+  const {
+    params: { id }
+  } = req;
+  try {
+    const video = await Video.findById(id);
+    // 정보를 찾아 videoDetail 템플릿에 video 정보를 전달
+    res.render("videoDetail", { pageTitle: "Video Detail", video });
+  } catch (error) {
+    res.redirect(routes.home);  // video 정보가 없을 때, redirect
+  }
+};
 
 export const editVideo = (req, res) =>
   res.render("editVideo", { pageTitle: "Edit Video" });
