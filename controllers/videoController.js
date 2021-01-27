@@ -47,7 +47,7 @@ export const videoDetail = async (req, res) => {
   try {
     const video = await Video.findById(id);
     // 정보를 찾아 videoDetail 템플릿에 video 정보를 전달
-    res.render("videoDetail", { pageTitle: "Video Detail", video });
+    res.render("videoDetail", { pageTitle: video.title, video });
   } catch (error) {
     res.redirect(routes.home);  // video 정보가 없을 때, redirect
   }
@@ -81,5 +81,14 @@ export const postEditVideo = async (req, res) => {
   }
 };
 
-export const deleteVideo = (req, res) =>
-  res.render("deleteVideo", { pageTitle: "Delete Video" });
+export const deleteVideo = async (req, res) => {
+  const {
+    params: { id }
+  } = req;
+  try {
+    await Video.findByIdAndRemove({ _id: id });
+  } catch (error) {
+    res.redirect(routes.home);
+  }
+};
+  
