@@ -17,7 +17,7 @@ export const home = async (req, res) => {
 export const search = (req, res) => {
   // const searchingBy = req.query.term; // Before ES6
   const {
-    query: { term: searchingBy }
+    query: { term: searchingBy },
   } = req;
   // searchingBy: searchingBy
   res.render("search", { pageTitle: "Search", searchingBy, videos });
@@ -29,34 +29,34 @@ export const getUpload = (req, res) =>
 export const postUpload = async (req, res) => {
   const {
     body: { title, description },
-    file: { path }
+    file: { path },
   } = req;
-  
-  const newVideo = await Video.create({ 
+
+  const newVideo = await Video.create({
     fileUrl: path,
     title,
-    description
+    description,
   });
   res.redirect(routes.videoDetail(newVideo.id));
 };
 
 export const videoDetail = async (req, res) => {
   const {
-    params: { id }
+    params: { id },
   } = req;
   try {
     const video = await Video.findById(id);
     // 정보를 찾아 videoDetail 템플릿에 video 정보를 전달
     res.render("videoDetail", { pageTitle: video.title, video });
   } catch (error) {
-    res.redirect(routes.home);  // video 정보가 없을 때, redirect
+    res.redirect(routes.home); // video 정보가 없을 때, redirect
   }
 };
 
 // template rendering
 export const getEditVideo = async (req, res) => {
   const {
-    params: { id }
+    params: { id },
   } = req;
   try {
     const video = await Video.findById(id);
@@ -65,12 +65,13 @@ export const getEditVideo = async (req, res) => {
     res.redirect(routes.home);
   }
 };
+s;
 
 // update video and redirect
 export const postEditVideo = async (req, res) => {
   const {
-    params: {id},
-    body: { title, description }
+    params: { id },
+    body: { title, description },
   } = req;
   try {
     // https://mongoosejs.com/docs/api.html#model_Model.findById
@@ -83,12 +84,12 @@ export const postEditVideo = async (req, res) => {
 
 export const deleteVideo = async (req, res) => {
   const {
-    params: { id }
+    params: { id },
   } = req;
   try {
     await Video.findByIdAndRemove({ _id: id });
   } catch (error) {
-    res.redirect(routes.home);
+    console.log(error);
   }
+  res.redirect(routes.home);
 };
-  
