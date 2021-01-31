@@ -14,11 +14,22 @@ export const home = async (req, res) => {
   }
 };
 
-export const search = (req, res) => {
+export const search = async (req, res) => {
   // const searchingBy = req.query.term; // Before ES6
   const {
     query: { term: searchingBy },
   } = req;
+
+  let videos = [];
+
+  try {
+    videos = await Video.find({
+      // regular expression로 제목 찾기, 대소문자 구분 X (insensitive)
+      title: { $regex: searchingBy, $options: "i" },
+    });
+  } catch (error) {
+    console.log(error);
+  }
   // searchingBy: searchingBy
   res.render("search", { pageTitle: "Search", searchingBy, videos });
 };
@@ -65,7 +76,6 @@ export const getEditVideo = async (req, res) => {
     res.redirect(routes.home);
   }
 };
-s;
 
 // update video and redirect
 export const postEditVideo = async (req, res) => {
