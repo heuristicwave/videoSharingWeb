@@ -8,11 +8,13 @@ import routes from "./routes";
 import userRouter from "./routers/userRouter"; // default로 export한 것이 아님
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
+
 const app = express();
 
 app.use(helmet({ contentSecurityPolicy: false }));
 app.set("view engine", "pug");
 app.use("/uploads", express.static("uploads")); // static() : directory에서 file을 전달하는 middleware
+app.use("/static", express.static("static"));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
