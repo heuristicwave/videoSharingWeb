@@ -1,5 +1,11 @@
 .header {
-  background-color: $red;
+  @mixin gradient($direction, $list) {
+    background: -webkit-linear-gradient($direction, $list);
+    background: -moz-linear-gradient($direction, $list);
+    background: -o-linear-gradient($direction, $list);
+    background: linear-gradient($direction, $list);
+  }
+  @include gradient(left, $list1);
   margin-bottom: 50px;
   .header__wrapper {
     padding: 5px 0px;
