@@ -10,9 +10,9 @@ export const localsMiddleware = (req, res, next) => {
   // sample for userDetail test
   res.locals.user = {
     isAuthenticated: true,
-    id: 1
+    id: 1,
   };
   next();
 };
 // upload.pug의 videoFile, 하나의 비디오 파일만 올라감
-export const uploadVideo = multerVideo.single("videoFile"); 
+export const uploadVideo = multerVideo.single("videoFile");
