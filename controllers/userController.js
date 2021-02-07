@@ -34,7 +34,6 @@ export const getLogin = (req, res) =>
 export const postLogin = passport.authenticate("local", {
   failureRedirect: routes.login,
   successRedirect: routes.home,
-  failureFlash: true,
 });
 
 export const logout = (req, res) => {
@@ -42,6 +41,9 @@ export const logout = (req, res) => {
   res.redirect(routes.home);
 };
 
-export const userDetail = (req, res) => res.render("userDetail");
-export const editProfile = (req, res) => res.render("editProfile");
-export const changePassword = (req, res) => res.render("changePassword");
+export const userDetail = (req, res) =>
+  res.render("userDetail", { pageTitle: "User Detail" });
+export const editProfile = (req, res) =>
+  res.render("editProfile", { pageTitle: "Edit Profile" });
+export const changePassword = (req, res) =>
+  res.render("changePassword", { pageTitle: "Change Password" });
