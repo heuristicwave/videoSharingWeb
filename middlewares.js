@@ -2,6 +2,7 @@ import multer from "multer";
 import routes from "./routes";
 
 const multerVideo = multer({ dest: "uploads/videos/" });
+const multerAvatar = multer({ dest: "uploads/avatars/" });
 
 export const localsMiddleware = (req, res, next) => {
   // http://expressjs.com/ko/api.html#res.locals
@@ -30,3 +31,4 @@ export const onlyPrivate = (req, res, next) => {
 
 // upload.pug의 videoFile, 하나의 비디오 파일만 올라감
 export const uploadVideo = multerVideo.single("videoFile");
+export const uploadAvatar = multerAvatar.single("avatar");
