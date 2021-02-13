@@ -1,13 +1,24 @@
 extends layouts/main
+include mixins/videoBlock
 
 block content
     .user-profile
         .user-profile__header
-            img.u-avatar(src=user.avatarUrl)
+            //- 절대경로 활용해야, 다른 id에서도 avatar 나옴
+            img.u-avatar(src=`/${user.avatarUrl}`)
             h4.profile__username=user.name
-        if user.id === loggedUser.id
+        //- 로그인 했을때는 소유자 아이디와 같아야 편집 가능
+        if loggedUser && loggedUser.id === user.id
             .user-profile__btns
                 a(href=`/users${routes.editProfile}`)
                     button 🖋 Edit Profile
                 a(href=`/users${routes.changePassword}`)
-                    button 🔒 Change Password 
+                    button 🔒 Change Password
+        .home-videos
+            each item in user.videos 
+                +videoBlock({
+                    id:item.id,
+                    title:item.title,
+                    views:item.views,
+                    videoFile:item.fileUrl
+                })
