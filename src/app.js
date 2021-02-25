@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import passport from "passport";
 import mongoose from "mongoose";
 import session from "express-session";
+import path from "path";
 import MongoStore from "connect-mongo";
 import { localsMiddleware } from "./middlewares";
 import routes from "./routes";
@@ -22,8 +23,10 @@ const CookieStore = MongoStore(session); // 세션 mongo에 저장
 
 app.use(helmet({ contentSecurityPolicy: false }));
 app.set("view engine", "pug");
-app.use("/uploads", express.static("uploads")); // static() : directory에서 file을 전달하는 middleware
-app.use("/static", express.static("static"));
+app.set("views", path.join(__dirname, "views"));
+app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // local upload, s3 이전 하면 필요 없음
+// static() : directory에서 file을 전달하는 middleware
+app.use("/static", express.static(path.join(__dirname, "static")));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
